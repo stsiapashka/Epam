@@ -47,9 +47,9 @@ namespace webdrive.Test
          Нажать кнопку Найти билеты*/
          public void SearchRouteWithoutDestination()
          {
-             var destinationText = webdriver.FindElement(By.ClassName("sfInputTd"));//дата вылета
+             var destinationText = webdriver.FindElement(By.ClassName("sfInputTd"));
 
-             var entercity = webdriver.FindElement(By.Id("cty0")); //откуда
+             var entercity = webdriver.FindElement(By.Id("cty0")); 
              entercity.SendKeys("Минск (все аэропорты), Беларусь");
 
              var openkalendarto = webdriver.FindElement(By.Id("outDate"));
