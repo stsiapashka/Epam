@@ -11,8 +11,6 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Edge;
 
 
-
-
 namespace webdrive.Test
 {
     [TestFixture]
@@ -21,6 +19,10 @@ namespace webdrive.Test
         public IWebDriver webdriver;
         private const string ErrorTextForEmptyString = "Введите название города или аэропорта";
         private const string ErrorTextForRowNotFound = "Не было найдено неоплаченых броней с таким кодом.";
+        
+        static DateTime currentDate = DateTime.Now;
+        public string dayAfterTomorrowDate = (currentDate.AddDays(0)).Day.ToString();
+        private static string monthOfDayAfterTomorrow = (currentDate.AddMonths(-1)).Month.ToString();
 
         [SetUp]
         public void StartBrowser()
@@ -35,16 +37,13 @@ namespace webdrive.Test
         {
             webdriver.Quit();
         }
-        static DateTime currentDate = DateTime.Now;
-        public string dayAfterTomorrowDate = (currentDate.AddDays(0)).Day.ToString();
-        private static string monthOfDayAfterTomorrow = (currentDate.AddMonths(-1)).Month.ToString();
-
+        
         [Test]
-        /* Поиск маршрута из определенного города без ввода города прибытия.
-         Шаги: 
-         ЗАйти  на главную страницу сайта;
-         заполнить формы город вылета(Минск), Дату вылеты и прибытия;
-         Нажать кнопку Найти билеты*/
+        // Поиск маршрута из определенного города без ввода города прибытия.
+        // Шаги: 
+        // ЗАйти  на главную страницу сайта;
+        // заполнить формы город вылета(Минск), Дату вылеты и прибытия;
+        // Нажать кнопку Найти билеты
          public void SearchRouteWithoutDestination()
          {
              var destinationText = webdriver.FindElement(By.ClassName("sfInputTd"));
@@ -74,7 +73,6 @@ namespace webdrive.Test
         //Появление всплывающего окна с сообщением:"введите название города или аэропорта".
 
 
-
         //        Ввод некорректного номера брони
         //Шаги:
         //-Зайти на сайт 
@@ -98,6 +96,5 @@ namespace webdrive.Test
             string errorMessage = (webdriver.FindElement(By.Id("payonlineResult")).FindElement(By.ClassName("error"))).Text;
             Assert.AreEqual(ErrorTextForRowNotFound, errorMessage);    
         }
-
     }
 }
