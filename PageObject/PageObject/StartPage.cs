@@ -12,15 +12,7 @@ namespace PageObject
         {
             PageFactory.InitElements(webDriver, this);
         }
-
-        private IWebDriver webDriver;
-        private readonly string url = "https://aviago.by/search/S19476103/";
-
-        static DateTime currentDate = DateTime.Now;
-        public  string dayAfterTomorrowDate = (currentDate.AddDays(2)).Day.ToString();
-        public static string monthOfDayAfterTomorrow = (currentDate.AddMonths(-1)).Month.ToString();
-
-
+           
         [FindsBy(How = How.Id, Using = "login")]
         private IWebElement LoginButton { get; set; }
 
