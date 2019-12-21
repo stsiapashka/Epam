@@ -63,7 +63,7 @@ namespace GitHubAutomation.Tests
                 ChooseADepartureCity().
                 ChooseCityOfArrival().
                 ChooseDateFlight();
-               Assert.IsTrue(mainpage.Searn());                
+               Assert.IsTrue(mainpage.Searn().Selected());                
         }
 
         [Test]
