@@ -30,8 +30,8 @@ namespace GitHubAutomation.Tests
         [Test]
         public void FindCheapTicket()
         {
-            MainPage mainpage = new MainPage(Driver);
-            mainpage.buttonCheapticket.Click();
+            MainPage mainpage = new MainPage(Driver);           
+            Assert.IsTrue( mainpage.buttonCheapticket.Click());
         }
 
         [Test]
@@ -62,8 +62,8 @@ namespace GitHubAutomation.Tests
             mainpage.InputAirline().
                 ChooseADepartureCity().
                 ChooseCityOfArrival().
-                ChooseDateFlight().
-                Search();
+                ChooseDateFlight();
+               Assert.IsTrue(mainpage.Searn());                
         }
 
         [Test]
