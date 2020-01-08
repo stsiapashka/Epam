@@ -9,7 +9,7 @@ using GitHubAutomation.Driver;
 
 namespace GitHubAutomation.Tests
 {
-    public class GeneralConfig : Logger
+    public class GeneralConfig
     {
         static private ILog Log = LogManager.GetLogger(typeof(Logger));
 
@@ -19,7 +19,7 @@ namespace GitHubAutomation.Tests
         public void SetDriver()
         {
             Driver = DriverSingleton.GetDriver();
-            Driver.Navigate().GoToUrl("http://www.sixt.global");
+             Driver.Navigate().GoToUrl("https://aviago.by/");
         }
 
         protected void TakeScreenshotWhenTestFailed(Action action)
@@ -43,7 +43,6 @@ namespace GitHubAutomation.Tests
         [TearDown]
         public void QuitDriver()
         {
-            Log.Info("Test_Successfully");
             DriverSingleton.CloseDriver();
         }
     }
