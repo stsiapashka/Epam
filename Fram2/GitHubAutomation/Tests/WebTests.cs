@@ -14,7 +14,8 @@ namespace GitHubAutomation.Tests
         public void LogInAsAnUnknowUser()
         {
             SignInPage signInPage = new MainPage(Driver).
-                GoToSignIn().InputLogin(UserCreator.WithCredentialsFromProperty()).
+                GoToSignIn().
+                InputLogin(UserCreator.WithCredentialsFromProperty()).
                 InputPassword(UserCreator.WithCredentialsFromProperty());
             Assert.AreEqual(signInPage.PageDialog, "Не удалось войтиПроверьте введенные адрес почты и пароль.");
         }
@@ -24,7 +25,9 @@ namespace GitHubAutomation.Tests
         {
 
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).ChooseDateFlight().Search();
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).
+            ChooseDateFlight().
+            Search();
             Assert.AreEqual(mainpage.errorPopupMessage, "Введите название города или аэропорта");
         }
 
