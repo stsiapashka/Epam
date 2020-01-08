@@ -10,12 +10,13 @@ namespace GitHubAutomation.Tests
     [TestFixture]
     public class WebTests : GeneralConfig
     {
-        [Test]
+         [Test]
         public void LogInAsAnUnknowUser()
         {
-            SignInPage sigin = new SignInPage(Driver);
-            sigin.InputLogin(UserCreator.WithCredentialsFromProperty()).InputPassword(UserCreator.WithCredentialsFromProperty());
-            Assert.AreEqual(sigin.PageDialog, "Не удалось войти");
+            SignInPage signInPage = new MainPage(Driver).
+                GoToSignIn().InputLogin(UserCreator.WithCredentialsFromProperty()).
+                InputPassword(UserCreator.WithCredentialsFromProperty());
+            Assert.AreEqual(signInPage.PageDialog, "Не удалось войтиПроверьте введенные адрес почты и пароль.");
         }
 
         [Test]
@@ -23,23 +24,23 @@ namespace GitHubAutomation.Tests
         {
 
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity().ChooseDateFlight().Search();
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).ChooseDateFlight().Search();
             Assert.AreEqual(mainpage.errorPopupMessage, "Введите название города или аэропорта");
         }
 
         [Test]
         public void FindCheapTicket()
         {
-            MainPage mainpage = new MainPage(Driver);           
-            Assert.IsTrue( mainpage.buttonCheapticket.Click());
+            MainPage mainpage = new MainPage(Driver);
+            Assert.IsTrue(mainpage.Cheapticket());
         }
 
         [Test]
         public void SendOneChild()
         {
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity().
-            ChooseCityOfArrival().
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).
+            ChooseCityOfArrival(RouteCreate.WithCredentialsFromProperty()).
             ChooseDateFlight().
             AddChild().
             DeleteAdult().
@@ -54,24 +55,13 @@ namespace GitHubAutomation.Tests
             mainpage.FindBron();
             Assert.AreEqual(mainpage.errorMesForBrone, "Не было найдено неоплаченых броней с таким кодом.");
         }
-               
-        [Test]
-        public void FindFlightBySelectedAirline()
-        {
-            MainPage mainpage = new MainPage(Driver);
-            mainpage.InputAirline().
-                ChooseADepartureCity().
-                ChooseCityOfArrival().
-                ChooseDateFlight();
-               Assert.IsTrue(mainpage.Searn());                
-        }
 
         [Test]
         public void SameCityOfArrivalAndDeparture()
         {
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity().
-                ChooseCityOfArrival().
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).
+                ChooseCityOfArrival(RouteCreate.WithCredentialsFromProperty()).
                 ChooseDateFlight().
                 Search();
             Assert.AreEqual(mainpage.notfound, "К сожалению не было найдено ни одного предложения. Поробуйте поменять параметры поиска. ");
@@ -81,8 +71,8 @@ namespace GitHubAutomation.Tests
         public void MoreYoungAdultsThanAdults()
         {
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity().
-                ChooseCityOfArrival().
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).
+                ChooseCityOfArrival(RouteCreate.WithCredentialsFromProperty()).
                 ChooseDateFlight().
                 AddAdult().
                 AddBaby().
@@ -91,28 +81,28 @@ namespace GitHubAutomation.Tests
                 Search();
             Assert.AreEqual(mainpage.notfound, "К сожалению не было найдено ни одного предложения. Поробуйте поменять параметры поиска. ");
         }
+
+
         [Test]
         public void SendAPassengerWithoutData()
         {
             MainPage mainpage = new MainPage(Driver);
-            mainpage.ChooseADepartureCity().
-            ChooseCityOfArrival().
+            mainpage.ChooseADepartureCity(RouteCreate.WithCredentialsFromProperty()).
+            ChooseCityOfArrival(RouteCreate.WithCredentialsFromProperty()).
             ChooseDateFlight().
-            Search().
-            buttonShooce.Click();
-
-            PassengerDataPage passenger = new PassengerDataPage(Driver);
+            Search();
+            PassengerDataPage passenger = mainpage.GoToPassengerDataPage();
             passenger.InputDataPass(UserCreator.WithCredentialsFromProperty());
             Assert.AreEqual(passenger.ErrorPopupMessage, "Введите номер телефона");
         }
+
         [Test]
         public void ViewSarchHistory()
         {
             MainPage mainpage = new MainPage(Driver);
             mainpage.buttonVilnusOslo.Click();
-            mainpage.buttonShooce.Click();
 
-            PassengerDataPage passenger = new PassengerDataPage(Driver);
+            PassengerDataPage passenger = mainpage.GoToPassengerDataPage();
             passenger.InputDataPass(UserCreator.WithCredentialsFromProperty()).
                 Inputdateforpassport(UserCreator.WithCredentialsFromProperty()).
                 InputKardInfo(UserCreator.UserKardInfo());
