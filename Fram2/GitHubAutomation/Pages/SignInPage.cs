@@ -25,7 +25,6 @@ namespace GitHubAutomation.Pages
 
         [FindsBy(How = How.XPath, Using = "//div[text() ='Не удалось войти']")]
         public IWebElement PageDialog;
-
      
         public SignInPage(IWebDriver webDriver)
         {
@@ -34,10 +33,8 @@ namespace GitHubAutomation.Pages
         }
         public SignInPage InputLogin(User user)
         {
-            LoginButton.Click();
             InputEmail.SendKeys(user.login);
             return this;
-
         }
         public SignInPage InputPassword(User user)
         {
@@ -45,6 +42,5 @@ namespace GitHubAutomation.Pages
             ButtonComeIn.Click();
             return this;
         }
-
     }
 }
