@@ -11,18 +11,14 @@ namespace GitHubAutomation.Pages
     {
         private IWebDriver driver;
 
+        [FindsBy(How = How.Id, Using = "login")]
+        private IWebElement LoginButton;
+        
         [FindsBy(How = How.Id, Using = "cty0")]
         private IWebElement destinationText;
-
-        [FindsBy(How = How.XPath, Using = "//td[text()='Минск (Minsk International 2)']")]
-        private IWebElement enterdeparturecity;
-
        
         [FindsBy(How = How.Id, Using = "cty1")]
         private IWebElement inputentercityofarrival;
-
-        [FindsBy(How = How.XPath, Using = "//td[text()='Москва (все аэропорты)']")]
-        private IWebElement entercityofarrival;
 
         [FindsBy(How = How.Id, Using = "outDate")]
         private IWebElement openkalendarto;
@@ -32,7 +28,6 @@ namespace GitHubAutomation.Pages
 
         [FindsBy(How = How.Id, Using = "retDate")]
         private IWebElement openkalendarback;
-
 
         [FindsBy(How = How.XPath, Using = "//div[@title='В одну сторону']")]
         private IWebElement crest;
@@ -51,8 +46,6 @@ namespace GitHubAutomation.Pages
 
         [FindsBy(How = How.ClassName, Using = "ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only")]
         public IWebElement Addoneadult;
-
-
 
         [FindsBy(How = How.XPath, Using = "//div[@id='cty1-error']")]
         public IWebElement errorPopupMessage;
@@ -98,17 +91,39 @@ namespace GitHubAutomation.Pages
             PageFactory.InitElements(driver, this);
             this.driver = driver;
         }
-
-        public MainPage ChooseADepartureCity()
+        
+        public SignInPage GoToSignIn()
         {
-            destinationText.Click();
-            enterdeparturecity.Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+                .Until(ExpectedConditions.ElementToBeClickable(LoginButton));
+            LoginButton.Click();
+            return new SignInPage(driver);
+        }
+        
+        public PassengerDataPage GoToPassengerDataPage()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+                .Until(ExpectedConditions.ElementToBeClickable(buttonChooce));
+            buttonChooce.Click();
+            return new PassengerDataPage(driver);
+        }
+        
+        public MainPage ChooseADepartureCity(Route route)
+        {
+            destinationText.SendKeys(route.departurecity);          
             return this;
         }
-        public MainPage ChooseCityOfArrival()
+         public MainPage ChooseCityOfArrival(Route route)
         {
-            inputentercityofarrival.Click();
-            entercityofarrival.Click();
+            inputentercityofarrival.SendKeys(route.cityofarrival);
+            return this;
+        }
+        public MainPage ChooseDateFlight()
+        {
+            openkalendarto.Click();
+            selectdate.Click();
+            openkalendarback.Click();
+            crest.Click();
             return this;
         }
         public MainPage ChooseDateFlight()
@@ -158,6 +173,17 @@ namespace GitHubAutomation.Pages
             selectairlin.Click();
             return this;
         }
-
+        public bool Cheapticket()
+        {
+            try
+            {
+                buttonCheapticket.Click();
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
     }
 }
