@@ -7,7 +7,7 @@ using GitHubAutomation.Models;
 
 namespace GitHubAutomation.Pages
 {
-    class PassengerDataPage
+    public class PassengerDataPage
     {
         private IWebDriver driver;
 
@@ -28,7 +28,7 @@ namespace GitHubAutomation.Pages
         [FindsBy(How = How.Id, Using = "fd_phone")]
         public IWebElement inputphone;
                 
-     [FindsBy(How = How.Id, Using = "doc_exp0")]
+        [FindsBy(How = How.Id, Using = "doc_exp0")]
         public IWebElement inputdatepasport;
 
         [FindsBy(How = How.Id, Using = "email")]
